@@ -1,24 +1,36 @@
 import java.util.UUID;
 
-public class Account {
+public abstract class Account implements AccountManagement {
     private String username;
-    // TODO: Passwords should hashed
-    private String password;
+    private int password;
     private UUID accountID;
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password.hashCode();
+        accountID = UUID.randomUUID();
+    }
 
     @Override
     public boolean validatePassword(String enteredPassword) {
-        //TODO
-        return false;
+        if (enteredPassword.length() < 8)
+            return false ;
+        return true;
     }
 
     @Override
     public void changeUsername(String newUsername) {
-        //TODO
+        username = newUsername ;
     }
 
     @Override
     public void changePassword(String newPassword) {
-        //TODO
+        password = newPassword.hashCode() ;
     }
+
+    public abstract void Log_In(String username, String password);
+
+    public abstract void Sign_Up(String username, String password);
+
+
 }
