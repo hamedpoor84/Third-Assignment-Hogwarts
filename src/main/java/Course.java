@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Course {
+    public ArrayList<Course> Courses = new ArrayList<>() ;
     private String Titel ;
     private UUID courseID ;
     private static Map<String, Integer> Course_Students
