@@ -3,12 +3,35 @@
  */
 
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
+
+//    public ArrayList<Student> Student = new ArrayList<>() ;
+
     public static void main(String[] args) {
-        // TODO: Program starts from here
+        runMenu();
     }
 
     public static void runMenu() {
-        // TODO: Menu will be shown here...
+        System.out.println("choose an Account mode");
+        System.out.println("1- Manager   2- Assitant   3- Teacher   4- Student");
+        Scanner scanner = new Scanner(System.in);
+        String character = scanner.nextLine() ;
+        if (character == "manager")
+        {
+            hamedشکتبنیشبتنیشکتنیبکشبنتیبتکینشتنمکنتنتنتن
+
+
+
+        } else if (character == "assitant") {
+
+        } else if (character == "teacher") {
+
+        } else if (character == "student") {
+
+        } else System.out.println("Account mode not found :(");
+
     }
 }
