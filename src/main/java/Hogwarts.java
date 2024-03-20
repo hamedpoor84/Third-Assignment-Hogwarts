@@ -80,7 +80,7 @@ public class Hogwarts {
     {
         Assistant assistant = new Assistant(username , password) ;
         Assistant.add(assistant);
-        System.out.println("teacher add sucessfully");
+        System.out.println("assistant add sucessfully");
     }
     public void Add_Student (String username , String password)
     {
@@ -110,45 +110,65 @@ public class Hogwarts {
     }
     public boolean Teacher_existance (String name)
     {
-        for (int i = 0 ; i < Teachers.size()  ; i++ )
-        {
-            if (name.equals(Teachers.get(i).getUsername()))
-                return true ;
+        for (Teacher teacher : Teachers) {
+            if (name.equals(teacher.getUsername()))
+                return true;
         }
         return false ;
     }
     public Teacher Find_teacher (String name )
     {
-        for (int i = 0 ; i < Teachers.size()  ; i++ )
-        {
-            if (name.equals(Teachers.get(i).getUsername()))
-                return Teachers.get(i) ;
+        for (Teacher teacher : Teachers) {
+            if (name.equals(teacher.getUsername()))
+                return teacher;
         }
         return Teachers.get(0) ;
     }
     public boolean Student_existance (String name)
     {
-        for (int i = 0 ; i < Teachers.size()  ; i++ )
-        {
-            if (name.equals(Teachers.get(i).getUsername()))
-                return true ;
+        for (Teacher teacher : Teachers) {
+            if (name.equals(teacher.getUsername()))
+                return true;
         }
         return false ;
     }
     public Students Find_Student (String name)
     {
-        for (int i = 0 ; i < Students.size()  ; i++ )
-        {
-            if (name.equals(Students.get(i).getUsername()))
-                return Students.get(i) ;
+        for (Students student : Students) {
+            if (name.equals(student.getUsername()))
+                return student;
         }
         return Students.get(0) ;
+    }
+    public boolean Course_Existence (String name)
+    {
+        for (Course cours : Courses) {
+            if (name.equals(cours.getTitel()))
+                return true;
+        }
+        return false ;
+    }
+    public Course Find_Course (String name)
+    {
+        for (Course cours : Courses) {
+            if (name.equals(cours.getTitel()))
+                return cours;
+        }
+        return Courses.get(0) ;
     }
     public void Add_course (String Title , Teacher teacher)
     {
         Course course = new Course(Title , teacher) ;
         Courses.add(course) ;
         System.out.println("course add sucessfully");
+    }
+    public void View_Teacher_Courses (Teacher teacher)
+    {
+        ArrayList<Course> courses = teacher.getTeacher_courses() ;
+        for (int i = 0 ; i < courses.size() ; i++ )
+        {
+            System.out.println(i+1 + "_ " + courses.get(i));
+        }
     }
 }
 
