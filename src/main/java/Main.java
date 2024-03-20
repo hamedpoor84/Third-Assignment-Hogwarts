@@ -61,11 +61,31 @@ public class Main {
                                     } else if (information.equals("score")) {
                                         System.out.println(teacher.getScore());
                                     } else if (information.equals("courses")) {
-                                        teacher.View_Teacher_comments(teacher);
+                                        hogwarts.View_Teacher_Courses(teacher);
                                     }
                                 }else {
                                     System.out.println("teacher not found");
                                 }
+                            } else if (ob.equals("course")) {
+                                String name = scanner.next() ;
+                                if (hogwarts.Teacher_existance(name))
+                                {
+                                    Course course = hogwarts.Find_Course(name) ;
+                                    String information = scanner.next() ;
+                                    if (information.equals("teacher"))
+                                    {
+                                        course.getTeacher();
+                                    }
+//                                    else if (information.equals("score")) {
+//                                        System.out.println(teacher.getScore());
+//                                    }
+                                    else if (information.equals("students")) {
+                                        course.Show_Course_student();
+                                    }
+                                }else {
+                                    System.out.println("teacher not found");
+                                }
+
                             }
                         } else if (command.equals("Remove")) {
                             String ob = scanner.next();
@@ -101,6 +121,15 @@ public class Main {
                                 user_name = scanner.next();
                                 password = scanner.next();
                                 hogwarts.Add_Student(user_name, password);
+                            }
+                        } else if (command.equals("set")) {
+                            String ob = scanner.next() ;
+                            String name = scanner.next() ;
+                            if (ob.equals("teacher"))
+                            {
+
+                            } else if (ob.equals("course")) {
+
                             }
                         } else if (command.equals("exit")) {
                             break ;
