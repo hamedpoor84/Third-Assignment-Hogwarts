@@ -18,6 +18,30 @@ public abstract class Account implements AccountManagement {
         return true;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getPassword() {
+        return password;
+    }
+
+    public void setPassword(int password) {
+        this.password = password;
+    }
+
+    public UUID getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(UUID accountID) {
+        this.accountID = accountID;
+    }
+
     @Override
     public void changeUsername(String newUsername) {
         username = newUsername ;
@@ -28,9 +52,6 @@ public abstract class Account implements AccountManagement {
         password = newPassword.hashCode() ;
     }
 
-    public abstract void Log_In(String username, String password);
-
-    public abstract void Sign_Up(String username, String password);
 
 
 }
