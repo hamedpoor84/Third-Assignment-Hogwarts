@@ -58,4 +58,8 @@ public class Teacher extends Account
         teacher = null ;
     }
 
+    public void Add_comment (String comment)
+    {
+        Teacher_comments.add(comment) ;
+    }
 }
