@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java. util. Random;
 
 public class Students extends Account {
     private ArrayList<Course> Student_courses = new ArrayList<>() ;
     private int score ;
+    private String Hogwarts_House ;
     public Students(String username, String password)
     {
         super(username, password);

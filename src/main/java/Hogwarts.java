@@ -5,7 +5,7 @@ import java.util.Timer;
 
 public class Hogwarts {
     public ArrayList<Teacher> Teachers = new ArrayList<>() ;
-    public ArrayList<Assistant> Assistant = new ArrayList<>() ;
+    public ArrayList<Assistant> Assistants = new ArrayList<>() ;
     public ArrayList<Course> Courses = new ArrayList<>() ;
     public ArrayList<Students> Students = new ArrayList<>() ;
 
@@ -24,16 +24,23 @@ public class Hogwarts {
         }
     }
     public void viewAllAssistant() {
-        for (int i = 0 ; i < Assistant.size() ; i++ )
+        for (int i = 0 ; i < Assistants.size() ; i++ )
         {
-            System.out.println(i+1 + "_ " + Assistant.get(i).getUsername());
+            System.out.println(i+1 + "_ " + Assistants.get(i).getUsername());
         }
     }
 
     public void viewAllCourses() {
         for (int i = 0 ; i < Courses.size() ; i++ )
         {
-            System.out.println(i+1 + "_ " + Courses.get(i).getTitel());
+            System.out.print(i+1 + "_ " + Courses.get(i).getTitle() + "      Teacher : ");
+            if (!Courses.get(i).isAccess_to_take())
+            {
+                System.out.println(Courses.get(i).getTeacher());
+            }
+            else {
+                System.out.println("no teacher define .");
+            }
         }
     }
     public boolean maneger_Log_in (String user_name , String password )
@@ -43,21 +50,10 @@ public class Hogwarts {
         else
             return false;
     }
-//    public boolean Teacher_Log_In(String user_name , String password)
-//    {
-//
-//    }
-//    public boolean Assistant_Log_In(String username , String password)
-//    {
-//
-//    }
+
     public void Remove_Teacher (Teacher teacher)// i shoud to remove teacher from every where .
     {
         teacher = null ;
-    }
-    public void rating_teacher (Teacher teacher , int score )
-    {
-        teacher.setScore(score);
     }
     public void commenting_teachers (Teacher teacher , String comment)
     {
@@ -79,7 +75,7 @@ public class Hogwarts {
     public void Add_Assistant (String username , String password)
     {
         Assistant assistant = new Assistant(username , password) ;
-        Assistant.add(assistant);
+        Assistants.add(assistant);
         System.out.println("assistant add sucessfully");
     }
     public void Add_Student (String username , String password)
@@ -95,8 +91,9 @@ public class Hogwarts {
         }
     }
     public void Score_Students(Teacher teacher){
+        System.out.println();
         System.out.println("Select the course you want .");
-        viewAllTeachers();
+        teacher.View_Teacher_Courses(teacher);
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         int choose_course = myObj.nextInt();  // Read user input
         System.out.println("Please get the name of student you want .");
@@ -108,7 +105,7 @@ public class Hogwarts {
         Course_Students.put(choose_student , score) ;
         teacher.getTeacher_courses().get(choose_course-1).setCourse_Students(Course_Students);
     }
-    public boolean Teacher_existance (String name)
+    public boolean Teacher_Existence (String name)
     {
         for (Teacher teacher : Teachers) {
             if (name.equals(teacher.getUsername()))
@@ -123,6 +120,22 @@ public class Hogwarts {
                 return teacher;
         }
         return Teachers.get(0) ;
+    }
+    public boolean Assistant_Existence (String name)
+    {
+        for (Assistant assistant : Assistants) {
+            if (name.equals(assistant.getUsername()))
+                return true;
+        }
+        return false ;
+    }
+    public Assistant Find_Assistant (String name)
+    {
+        for (Assistant assistant : Assistants) {
+            if (name.equals(assistant.getUsername()))
+                return assistant;
+        }
+        return Assistants.get(0) ;
     }
     public boolean Student_existance (String name)
     {
@@ -143,7 +156,7 @@ public class Hogwarts {
     public boolean Course_Existence (String name)
     {
         for (Course cours : Courses) {
-            if (name.equals(cours.getTitel()))
+            if (name.equals(cours.getTitle()))
                 return true;
         }
         return false ;
@@ -151,16 +164,16 @@ public class Hogwarts {
     public Course Find_Course (String name)
     {
         for (Course cours : Courses) {
-            if (name.equals(cours.getTitel()))
+            if (name.equals(cours.getTitle()))
                 return cours;
         }
         return Courses.get(0) ;
     }
-    public void Add_course (String Title , Teacher teacher)
+    public void Add_Course (String Title)
     {
-        Course course = new Course(Title , teacher) ;
+        Course course = new Course(Title) ;
         Courses.add(course) ;
-        System.out.println("course add sucessfully");
+        System.out.println("course add successfully");
     }
     public void View_Teacher_Courses (Teacher teacher)
     {
@@ -168,6 +181,13 @@ public class Hogwarts {
         for (int i = 0 ; i < courses.size() ; i++ )
         {
             System.out.println(i+1 + "_ " + courses.get(i));
+        }
+    }
+    public void Teacher_Requests (String request)
+    {
+        for (Assistant assistant : Assistants)
+        {
+            assistant.Add_Request(request);
         }
     }
 }

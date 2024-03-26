@@ -36,7 +36,7 @@ public class Main {
                     }
                     if (character.equals("Teacher"))
                     {
-                        if (hogwarts.Teacher_existance(user_name))
+                        if (hogwarts.Teacher_Existence(user_name))
                         {
                             Teacher teacher = hogwarts.Find_teacher(user_name);
                             if (teacher.getPassword() == password.hashCode())
@@ -47,7 +47,7 @@ public class Main {
                     }
                     if (character.equals("Assistant"))
                     {
-                        if (hogwarts.Teacher_existance(user_name))
+                        if (hogwarts.Teacher_Existence(user_name))
                         {
                             Assistant assistant = hogwarts.Find_Assistant(user_name);
                             if (assistant.getPassword() == password.hashCode())
@@ -108,7 +108,7 @@ public class Main {
                                     hogwarts.viewAllAssistant();
                                 } else if (ob.equals("teacher")) {
                                     String name = scanner.next();
-                                    if (hogwarts.Teacher_existance(name)) {
+                                    if (hogwarts.Teacher_Existence(name)) {
                                         Teacher teacher = hogwarts.Find_teacher(name);
                                         String information = scanner.next();
                                         if (information.equals("comments")) {
@@ -123,7 +123,7 @@ public class Main {
                                     }
                                 } else if (ob.equals("course")) {
                                     String name = scanner.next();
-                                    if (hogwarts.Teacher_existance(name)) {
+                                    if (hogwarts.Teacher_Existence(name)) {
                                         Course course = hogwarts.Find_Course(name);
                                         String information = scanner.next();
                                         if (information.equals("teacher")) {
@@ -158,13 +158,8 @@ public class Main {
                                     password = scanner.next();
                                     hogwarts.Add_Teacher(user_name, password);
                                 } else if (ob.equals("course")) {
-                                    String Titel = scanner.next();
-                                    String Teacher_name = scanner.next();
-                                    if (hogwarts.Teacher_existance(Teacher_name)) {
-                                        hogwarts.Add_course(Titel, hogwarts.Find_teacher(Teacher_name));
-                                    } else {
-                                        System.out.println("teacher not found");
-                                    }
+                                    String Title = scanner.next();
+                                    hogwarts.Add_Course(Title);
                                 } else if (ob.equals("assistant")) {
                                     user_name = scanner.next();
                                     password = scanner.next();
@@ -177,8 +172,8 @@ public class Main {
                                     String cf = scanner.next();
                                     if (cf.equals("teacher")) {
                                         String name = scanner.next();
-                                        if (hogwarts.Teacher_existance(name)) {
-                                            String comment = scanner.next("");
+                                        if (hogwarts.Teacher_Existence(name)) {
+                                            String comment = scanner.nextLine();
                                             hogwarts.Find_teacher(name).Add_comment(comment);
                                         } else {
                                             System.out.println("teacher not found");
@@ -189,7 +184,7 @@ public class Main {
                                 String ob = scanner.next();
                                 String name = scanner.next();
                                 if (ob.equals("teacher")) {
-                                    if (hogwarts.Teacher_existance(name)) {
+                                    if (hogwarts.Teacher_Existence(name)) {
                                         Teacher teacher = hogwarts.Find_teacher(name);
                                         String attribute = scanner.next();
                                         if (attribute.equals("score")) {
@@ -227,7 +222,7 @@ public class Main {
                                     hogwarts.viewAllStudents();
                                 } else if (ob.equals("teacher")) {
                                     String name = scanner.next();
-                                    if (hogwarts.Teacher_existance(name)) {
+                                    if (hogwarts.Teacher_Existence(name)) {
                                         Teacher teacher = hogwarts.Find_teacher(name);
                                         String information = scanner.next();
                                         if (information.equals("comments")) {
@@ -242,7 +237,7 @@ public class Main {
                                     }
                                 } else if (ob.equals("course")) {
                                     String name = scanner.next();
-                                    if (hogwarts.Teacher_existance(name)) {
+                                    if (hogwarts.Teacher_Existence(name)) {
                                         Course course = hogwarts.Find_Course(name);
                                         String information = scanner.next();
                                         if (information.equals("teacher"))
@@ -283,12 +278,7 @@ public class Main {
                                     hogwarts.Add_Teacher(user_name, password);
                                 } else if (ob.equals("course")) {
                                     String Titel = scanner.next();
-                                    String Teacher_name = scanner.next();
-                                    if (hogwarts.Teacher_existance(Teacher_name)) {
-                                        hogwarts.Add_course(Titel, hogwarts.Find_teacher(Teacher_name));
-                                    } else {
-                                        System.out.println("teacher not found");
-                                    }
+                                    hogwarts.Add_Course(Titel);
                                 } else if (ob.equals("student")) {
                                     user_name = scanner.next();
                                     password = scanner.next();
@@ -297,7 +287,7 @@ public class Main {
                                     String cf = scanner.next();
                                     if (cf.equals("teacher")) {
                                         String name = scanner.next();
-                                        if (hogwarts.Teacher_existance(name)) {
+                                        if (hogwarts.Teacher_Existence(name)) {
                                             String comment = scanner.next("");
                                             hogwarts.Find_teacher(name).Add_comment(comment);
                                         } else {
@@ -309,7 +299,7 @@ public class Main {
                                 String ob = scanner.next();
                                 String name = scanner.next();
                                 if (ob.equals("teacher")) {
-                                    if (hogwarts.Teacher_existance(name)) {
+                                    if (hogwarts.Teacher_Existence(name)) {
                                         Teacher teacher = hogwarts.Find_teacher(name);
                                         String attribute = scanner.next();
                                         if (attribute.equals("score")) {
@@ -368,15 +358,9 @@ public class Main {
                                 }
                             } else if (command.equals("set")) {
                                 String attribute = scanner.next() ;
-                                String course_name = scanner.next() ;
-                                String student_name = scanner.next() ;
-                                int score = scanner.nextInt() ;
                                 if (attribute.equals("score"))
                                 {
-                                    if (hogwarts.Find_teacher(user_name).Course_Take(course_name))
-                                    {
-                                        hogwarts.Find_Course(course_name).
-                                    }
+                                    hogwarts.Score_Students(hogwarts.Find_teacher(user_name));
                                 }
                             } else if (command.equals("exit")) {
                                 break;

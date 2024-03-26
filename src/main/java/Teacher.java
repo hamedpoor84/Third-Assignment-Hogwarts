@@ -24,6 +24,13 @@ public class Teacher extends Account
         }
     }
 
+    public void View_Teacher_Courses (Teacher teacher)
+    {
+        for (int i = 0 ; i < Teacher_courses.size() ; i++ )
+        {
+            System.out.println(i+1 + " " + Teacher_courses.get(i));
+        }
+    }
     public ArrayList<String> getTeacher_comments() {
         return Teacher_comments;
     }
@@ -46,20 +53,30 @@ public class Teacher extends Account
     public void Take_Courses(Course course , Teacher teacher)// i shoud print all courses than I
     // want a course for taking .
     {
+        if(!course.isAccess_to_take())
+        {
+            System.out.println("This course already has teacher ");
+            return;
+        }
         course.setTeacher(teacher);
         Teacher_courses.add(course);
     }
 
-    public void Courses_Student(Course course){
-        course.Show_Course_student();
-    }
-    public void Remove_Teacher (Teacher teacher)
-    {
-        teacher = null ;
-    }
+
 
     public void Add_comment (String comment)
     {
         Teacher_comments.add(comment) ;
+    }
+    public boolean Course_Take (String Title)
+    {
+        for(Course course : Teacher_courses)
+        {
+            if (course.getTitle().equals(Title))
+            {
+                return true ;
+            }
+        }
+        return false ;
     }
 }
