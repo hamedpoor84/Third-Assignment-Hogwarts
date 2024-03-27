@@ -9,7 +9,6 @@ public class Students extends Account {
     {
         super(username, password);
     }
-
     public ArrayList<Course> getStudent_courses() {
         return Student_courses;
     }
@@ -34,5 +33,8 @@ public class Students extends Account {
     {
 
     }
-
+    public void Remove_Course (String Title)
+    {
+        Student_courses.removeIf(course -> course.getTitle().equals(Title));
+    }
 }

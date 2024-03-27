@@ -1,3 +1,4 @@
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -50,21 +51,12 @@ public class Hogwarts {
         else
             return false;
     }
-
-    public void Remove_Teacher (Teacher teacher)// i shoud to remove teacher from every where .
-    {
-        teacher = null ;
-    }
     public void commenting_teachers (Teacher teacher , String comment)
     {
         ArrayList<String > comments = new ArrayList<>() ;
         comments = teacher.getTeacher_comments();
         comments.add(comment);
         teacher.setTeacher_comments(comments);
-    }
-    public void rating_students (Students student, int score )
-    {
-        student.setScore(score);
     }
     public void Add_Teacher (String username , String password)
     {
@@ -137,7 +129,7 @@ public class Hogwarts {
         }
         return Assistants.get(0) ;
     }
-    public boolean Student_existance (String name)
+    public boolean Student_Existance (String name)
     {
         for (Teacher teacher : Teachers) {
             if (name.equals(teacher.getUsername()))
@@ -189,6 +181,50 @@ public class Hogwarts {
         {
             assistant.Add_Request(request);
         }
+    }
+    public void Remove_Teacher (String user_name)
+    {
+        if(Teacher_Existence(user_name))
+        {
+            for (Course course : Find_teacher(user_name).getTeacher_courses())
+            {
+                course.setTeacher(null);
+                course.setAccess_to_take(true);
+            }
+            for (Teacher teacher : Teachers)
+            {
+                Teachers.remove(Find_teacher(user_name)) ;
+            }
+        } else {
+            System.out.println("teacher not find");
+        }
+    }
+    public void Remove_Student (String user_name)
+    {
+       for (Course course : Find_Student(user_name).getStudent_courses())
+           course.getCourse_Students().remove(user_name) ;
+       Students.removeIf(students -> students.getUsername().equals(user_name));
+    }
+    public void Remove_Course (String Title)
+    {
+        if(Course_Existence(Title))
+        {
+            for (String Key : Find_Course(Title).getCourse_Students().keySet())
+            {
+                Find_Student(Key).Remove_Course(Title);
+            }
+            Find_Course(Title).getTeacher().Remove_course(Title);
+        } else {
+            System.out.println("teacher not find");
+        }
+        Courses.removeIf(course -> course.getTitle().equals(Title)) ;
+    }
+    public void Add_Student_Course(Course course , Students students)
+    {
+        course.Add_student(students.getUsername());
+        ArrayList<Course> student_courses = students.getStudent_courses() ;
+        student_courses.add(course) ;
+        students.setStudent_courses(student_courses);
     }
 }
 

@@ -20,7 +20,7 @@ public class Teacher extends Account
     {
         for (int i = 0 ; i < Teacher_comments.size() ; i++ )
         {
-            System.out.println(i+1 + " " + Teacher_comments.get(i));
+            System.out.println(i+1 + "- " + Teacher_comments.get(i));
         }
     }
 
@@ -61,7 +61,10 @@ public class Teacher extends Account
         course.setTeacher(teacher);
         Teacher_courses.add(course);
     }
-
+    public void Remove_course (String Title)
+    {
+        Teacher_courses.removeIf(course -> course.getTitle().equals(Title)) ;
+    }
 
 
     public void Add_comment (String comment)
