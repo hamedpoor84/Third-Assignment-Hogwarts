@@ -28,7 +28,7 @@ public class Teacher extends Account
     {
         for (int i = 0 ; i < Teacher_courses.size() ; i++ )
         {
-            System.out.println(i+1 + " " + Teacher_courses.get(i));
+            System.out.println(i+1 + " " + Teacher_courses.get(i).getTitle());
         }
     }
     public ArrayList<String> getTeacher_comments() {
@@ -57,6 +57,8 @@ public class Teacher extends Account
         {
             System.out.println("This course already has teacher ");
             return;
+        } else {
+            System.out.println("mission accomplished");
         }
         course.setTeacher(teacher);
         Teacher_courses.add(course);

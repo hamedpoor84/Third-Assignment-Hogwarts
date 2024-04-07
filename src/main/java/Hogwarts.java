@@ -1,8 +1,5 @@
 import java.security.Key;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Timer;
+import java.util.*;
 
 public class Hogwarts {
     public ArrayList<Teacher> Teachers = new ArrayList<>() ;
@@ -14,30 +11,51 @@ public class Hogwarts {
     public void viewAllTeachers() {
         for (int i = 0 ; i < Teachers.size()  ; i++ )
         {
-            System.out.println(i+1 + "_ " + Teachers.get(i).getUsername());
+            System.out.println(i+1 + "- " + Teachers.get(i).getUsername());
         }
     }
 
+    public void fake_information ()
+    {
+        Students students = new Students("ali" , "aaaa");
+        Students students1 = new Students("omid" , "oooo");
+        Students students2 = new Students("mamad" , "mmmm") ;
+        Teacher teacher = new Teacher("mobin" , "mmmm") ;
+        Teacher teacher1 = new Teacher("peyman" , "pppp") ;
+        Teacher teacher2 = new Teacher("sobhan" , "ssss");
+        Course course = new Course("math");
+        Course course1 = new Course("math1");
+        Course course2 = new Course("math2");
+        Students.add(students);
+        Students.add(students1);
+        Students.add(students2);
+        Teachers.add(teacher);
+        Teachers.add(teacher1);
+        Teachers.add(teacher2);
+        Courses.add(course);
+        Courses.add(course1);
+        Courses.add(course2);
+    }
     public void viewAllStudents() {
         for (int i = 0 ; i < Students.size() ; i++ )
         {
-            System.out.println(i+1 + "_ " + Students.get(i).getUsername());
+            System.out.println(i+1 + "- " + Students.get(i).getUsername());
         }
     }
     public void viewAllAssistant() {
         for (int i = 0 ; i < Assistants.size() ; i++ )
         {
-            System.out.println(i+1 + "_ " + Assistants.get(i).getUsername());
+            System.out.println(i+1 + "- " + Assistants.get(i).getUsername());
         }
     }
 
     public void viewAllCourses() {
         for (int i = 0 ; i < Courses.size() ; i++ )
         {
-            System.out.print(i+1 + "_ " + Courses.get(i).getTitle() + "      Teacher : ");
+            System.out.print(i+1 + "- " + Courses.get(i).getTitle() + "      Teacher : ");
             if (!Courses.get(i).isAccess_to_take())
             {
-                System.out.println(Courses.get(i).getTeacher());
+                System.out.println(Courses.get(i).getTeacher().getUsername());
             }
             else {
                 System.out.println("no teacher define .");
@@ -83,10 +101,10 @@ public class Hogwarts {
         }
     }
     public void Score_Students(Teacher teacher){
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         System.out.println();
         System.out.println("Select the course you want .");
         teacher.View_Teacher_Courses(teacher);
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         int choose_course = myObj.nextInt();  // Read user input
         System.out.println("Please get the name of student you want .");
         teacher.getTeacher_courses().get(choose_course-1).Show_Course_student();
@@ -131,8 +149,8 @@ public class Hogwarts {
     }
     public boolean Student_Existance (String name)
     {
-        for (Teacher teacher : Teachers) {
-            if (name.equals(teacher.getUsername()))
+        for (Students students : Students) {
+            if (name.equals(students.getUsername()))
                 return true;
         }
         return false ;
@@ -186,14 +204,18 @@ public class Hogwarts {
     {
         if(Teacher_Existence(user_name))
         {
-            for (Course course : Find_teacher(user_name).getTeacher_courses())
-            {
+            for (Course course : Find_teacher(user_name).getTeacher_courses()) {
                 course.setTeacher(null);
                 course.setAccess_to_take(true);
             }
-            for (Teacher teacher : Teachers)
-            {
-                Teachers.remove(Find_teacher(user_name)) ;
+
+            Teacher teacherToRemove = Find_teacher(user_name);
+            Iterator<Teacher> iterator = Teachers.iterator();
+            while (iterator.hasNext()) {
+                Teacher teacher = iterator.next();
+                if (teacher == teacherToRemove) {
+                    iterator.remove();
+                }
             }
         } else {
             System.out.println("teacher not find");
@@ -215,7 +237,7 @@ public class Hogwarts {
             }
             Find_Course(Title).getTeacher().Remove_course(Title);
         } else {
-            System.out.println("teacher not find");
+            System.out.println("course not find");
         }
         Courses.removeIf(course -> course.getTitle().equals(Title)) ;
     }
@@ -225,6 +247,11 @@ public class Hogwarts {
         ArrayList<Course> student_courses = students.getStudent_courses() ;
         student_courses.add(course) ;
         students.setStudent_courses(student_courses);
+    }
+
+    public void takeCourse (String course , String teacher)
+    {
+        Find_teacher(teacher).Take_Courses(Find_Course(course) , Find_teacher(teacher));
     }
 }
 

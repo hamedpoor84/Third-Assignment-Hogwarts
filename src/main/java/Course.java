@@ -15,14 +15,14 @@ public class Course {
     }
 
     public void Add_student (String name){
-        Course_Students.put("name" , -1) ;
+        Course_Students.put(name , -1) ;
     }
 
     public void Show_Course_student ()
     {
         int i = 0 ;
         for (Map.Entry<String, Integer> e : Course_Students.entrySet()) { // Printing key-value pairs
-            System.out.print(i+1 + " " + e.getKey() + " ");
+            System.out.print(i+1 + "- " + e.getKey() + "   ");
             if (e.getValue() == -1 )
                 System.out.println("no score");
             else
