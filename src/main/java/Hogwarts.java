@@ -9,9 +9,12 @@ public class Hogwarts {
 
     // TODO: Define Functionalities
     public void viewAllTeachers() {
-        for (int i = 0 ; i < Teachers.size()  ; i++ )
-        {
-            System.out.println(i+1 + "- " + Teachers.get(i).getUsername());
+        if (!Teachers.isEmpty()) {
+            for (int i = 0; i < Teachers.size(); i++) {
+                System.out.println(i + 1 + "- " + Teachers.get(i).getUsername());
+            }
+        } else {
+            System.out.println("no teacher yet");
         }
     }
 
@@ -37,38 +40,39 @@ public class Hogwarts {
         Courses.add(course2);
     }
     public void viewAllStudents() {
-        for (int i = 0 ; i < Students.size() ; i++ )
-        {
-            System.out.println(i+1 + "- " + Students.get(i).getUsername());
+        if(!Students.isEmpty()) {
+            for (int i = 0; i < Students.size(); i++) {
+                System.out.println(i + 1 + "- " + Students.get(i).getUsername());
+            }
+        } else {
+            System.out.println("no student yet");
         }
     }
     public void viewAllAssistant() {
-        for (int i = 0 ; i < Assistants.size() ; i++ )
-        {
-            System.out.println(i+1 + "- " + Assistants.get(i).getUsername());
+        if (Teachers.isEmpty()) {
+            for (int i = 0; i < Assistants.size(); i++) {
+                System.out.println(i + 1 + "- " + Assistants.get(i).getUsername());
+            }
+        } else {
+            System.out.println("no assistant yet");
         }
     }
 
     public void viewAllCourses() {
-        for (int i = 0 ; i < Courses.size() ; i++ )
-        {
-            System.out.print(i+1 + "- " + Courses.get(i).getTitle() + "      Teacher : ");
-            if (!Courses.get(i).isAccess_to_take())
-            {
-                System.out.println(Courses.get(i).getTeacher().getUsername());
+        if (!Courses.isEmpty()) {
+            for (int i = 0; i < Courses.size(); i++) {
+                System.out.print(i + 1 + "- " + Courses.get(i).getTitle() + "      Teacher : ");
+                if (!Courses.get(i).isAccess_to_take()) {
+                    System.out.println(Courses.get(i).getTeacher().getUsername());
+                } else {
+                    System.out.println("no teacher define .");
+                }
             }
-            else {
-                System.out.println("no teacher define .");
-            }
+        } else {
+            System.out.println("not course yet");
         }
     }
-    public boolean maneger_Log_in (String user_name , String password )
-    {
-        if(user_name.equals("hamed") && password.equals("1234"))
-            return true;
-        else
-            return false;
-    }
+
     public void commenting_teachers (Teacher teacher , String comment)
     {
         ArrayList<String > comments = new ArrayList<>() ;
@@ -92,27 +96,27 @@ public class Hogwarts {
     {
         Students student = new Students(username , password) ;
         Students.add(student);
-        System.out.println("Student add sucessfully");
+        System.out.println("Student add successfully");
     }
-    public void Show_Teachers_Score(){
-        for (int i = 0 ; i < Teachers.size()  ; i++ )
-        {
-            System.out.println(i+1 + " " + Teachers.get(i).getUsername() + "   " + Teachers.get(i).getScore());
-        }
-    }
+//    public void Show_Teachers_Score(){
+//        for (int i = 0 ; i < Teachers.size()  ; i++ )
+//        {
+//            System.out.println(i+1 + " " + Teachers.get(i).getUsername() + "   " + Teachers.get(i).getScore());
+//        }
+//    }
     public void Score_Students(Teacher teacher){
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println();
-        System.out.println("Select the course you want .");
         teacher.View_Teacher_Courses(teacher);
+        System.out.println("Select the course you want .");
         int choose_course = myObj.nextInt();  // Read user input
-        System.out.println("Please get the name of student you want .");
         teacher.getTeacher_courses().get(choose_course-1).Show_Course_student();
-        String choose_student = myObj.nextLine();
+        System.out.println("Select the student you want");
+        int choose_student = myObj.nextInt();
         Map<String, Integer> Course_Students = teacher.getTeacher_courses().get(choose_course-1).getCourse_Students() ;
-        System.out.println("enter the score");
+        System.out.print("enter the score : ");
         int score = myObj.nextInt();
-        Course_Students.put(choose_student , score) ;
+        List<String> keysList = new ArrayList<>(Course_Students.keySet());
+        Course_Students.replace(keysList.get(choose_student-1)  , score ) ;
         teacher.getTeacher_courses().get(choose_course-1).setCourse_Students(Course_Students);
     }
     public boolean Teacher_Existence (String name)
@@ -129,7 +133,7 @@ public class Hogwarts {
             if (name.equals(teacher.getUsername()))
                 return teacher;
         }
-        return Teachers.get(0) ;
+        return Teachers.getFirst() ;
     }
     public boolean Assistant_Existence (String name)
     {
@@ -145,7 +149,7 @@ public class Hogwarts {
             if (name.equals(assistant.getUsername()))
                 return assistant;
         }
-        return Assistants.get(0) ;
+        return Assistants.getFirst() ;
     }
     public boolean Student_Existance (String name)
     {
@@ -161,23 +165,23 @@ public class Hogwarts {
             if (name.equals(student.getUsername()))
                 return student;
         }
-        return Students.get(0) ;
+        return Students.getFirst() ;
     }
     public boolean Course_Existence (String name)
     {
-        for (Course cours : Courses) {
-            if (name.equals(cours.getTitle()))
+        for (Course course : Courses) {
+            if (name.equals(course.getTitle()))
                 return true;
         }
         return false ;
     }
     public Course Find_Course (String name)
     {
-        for (Course cours : Courses) {
-            if (name.equals(cours.getTitle()))
-                return cours;
+        for (Course course : Courses) {
+            if (name.equals(course.getTitle()))
+                return course;
         }
-        return Courses.get(0) ;
+        return Courses.getFirst() ;
     }
     public void Add_Course (String Title)
     {
@@ -188,9 +192,12 @@ public class Hogwarts {
     public void View_Teacher_Courses (Teacher teacher)
     {
         ArrayList<Course> courses = teacher.getTeacher_courses() ;
-        for (int i = 0 ; i < courses.size() ; i++ )
-        {
-            System.out.println(i+1 + "_ " + courses.get(i));
+        if (!courses.isEmpty()) {
+            for (int i = 0; i < courses.size(); i++) {
+                System.out.println(i + 1 + "- " + courses.get(i).getTitle());
+            }
+        } else {
+            System.out.println("no course yet");
         }
     }
     public void Teacher_Requests (String request)
@@ -210,23 +217,12 @@ public class Hogwarts {
             }
 
             Teacher teacherToRemove = Find_teacher(user_name);
-            Iterator<Teacher> iterator = Teachers.iterator();
-            while (iterator.hasNext()) {
-                Teacher teacher = iterator.next();
-                if (teacher == teacherToRemove) {
-                    iterator.remove();
-                }
-            }
+            Teachers.removeIf(teacher -> teacher == teacherToRemove);
         } else {
             System.out.println("teacher not find");
         }
     }
-    public void Remove_Student (String user_name)
-    {
-       for (Course course : Find_Student(user_name).getStudent_courses())
-           course.getCourse_Students().remove(user_name) ;
-       Students.removeIf(students -> students.getUsername().equals(user_name));
-    }
+
     public void Remove_Course (String Title)
     {
         if(Course_Existence(Title))
@@ -251,7 +247,11 @@ public class Hogwarts {
 
     public void takeCourse (String course , String teacher)
     {
+        if (Course_Existence(course) && Teacher_Existence(teacher))
         Find_teacher(teacher).Take_Courses(Find_Course(course) , Find_teacher(teacher));
+        else {
+            System.out.println("WRONG!!!");
+        }
     }
 }
 
